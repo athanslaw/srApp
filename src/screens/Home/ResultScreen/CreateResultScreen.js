@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { Text, View } from "react-native";
-import ResultForm from "./component/ResultForm.js";
+import ResultForm from "./component/ResultForm";
 
 
 

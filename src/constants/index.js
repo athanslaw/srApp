@@ -1,0 +1,2 @@
+export const COUNTER_CHANGE = 'COUNTER_CHANGE'
+export const SAVE_USER = 'SAVE_USER'

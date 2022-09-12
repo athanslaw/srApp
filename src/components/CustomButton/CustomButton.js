@@ -1,11 +1,15 @@
 import React from 'react';
 import {Text, StyleSheet, Pressable} from 'react-native';
 
-const CustomButton = ({text, onPress, type="PRIMARY"}) => {
-    return (
-        <Pressable onPress={onPress} style={[styles.container, styles[`container_${type}`]]} >
-            <Text style={[styles.text, styles[`text_${type}`]]}>{text}</Text>
-        </Pressable>
+const CustomButton = ({text, isLoading, onPress, type="PRIMARY"}) => {
+    return (<>
+            {!isLoading && <Pressable onPress={onPress} style={[styles.container, styles[`container_${type}`]]} >
+                <Text style={[styles.text, styles[`text_${type}`]]}>{text}</Text>
+            </Pressable>}
+            {isLoading && <Pressable style={[styles[`container_loading`]]} >
+                <Text style={[styles.text_loading]}>Loading...</Text>
+            </Pressable>}
+        </>
     )
 }
 
@@ -17,17 +21,37 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         alignItems: 'center',
     },
+    container_loading: {
+        width:'100%',
+        borderRadius: 5,
+        padding:15,
+        marginVertical: 5,
+        alignItems: 'center',
+        backgroundColor: '#ddddee',
+    },
     container_PRIMARY: {
-        backgroundColor: '#3B71F3'
+        backgroundColor: '#333377'
+    },
+    container_SECONDARY: {
+        backgroundColor: '#FFFFFF',
+        padding:10,
     },
     container_TERTIARY: {},
     text:{
         fontWeight: 'bold',
         color: 'white',
     },
+    text_loading:{
+        fontWeight: 'bold',
+        color: '#aaaacc',
+    },
     text_TERTIARY:{
         fontWeight: 'bold',
         color: 'grey',
+    },
+    text_SECONDARY:{
+        fontWeight: 'bold',
+        color: '#333377',
     }
 })
 

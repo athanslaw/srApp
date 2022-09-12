@@ -4,23 +4,32 @@ import Logo from '../../assets/images/election.jpg';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import { connect } from 'react-redux';
+import CustomText from '../../components/CustomText/CustomText';
 //import '../../assets/styles/main.css';
 
 const HomeScreen = (props) => {
     const {height} = useWindowDimensions();
     
     const navigation = useNavigation();
-    const onForgotPasswordPressed = () => {
-      navigation.navigate('Home');
+    const openEvents = () => {
+      navigation.navigate('Events');
+    }
+    const openIncidents = () => {
+      navigation.navigate('Incident');
+    }
+    const openResults = () => {
+      navigation.navigate('Results');
     }
 
   return (
     <View style={styles.root}>
       <Image source={Logo} className="logo" style={[{height: height * 0.3}]} resizeMode="contain" />
-      <Text>Welcome back {props.user.username}</Text>
-      <CustomButton text='TRACK EVENTS' onPress={onForgotPasswordPressed} type="PRIMARY" />
-      <CustomButton text='REPORT INCIDENTS' onPress={onForgotPasswordPressed} type="PRIMARY" />
-      <CustomButton text='SUBMIT RESULT' onPress={onForgotPasswordPressed} type="PRIMARY" />
+      <CustomText value="" />
+      <CustomText value={`Welcome ${props.user.fullname}`} />
+      <CustomText value="" />
+      <CustomButton text='TRACK EVENTS' onPress={openEvents} type="PRIMARY" />
+      <CustomButton text='REPORT INCIDENTS' onPress={openIncidents} type="PRIMARY" />
+      <CustomButton text='SUBMIT RESULT' onPress={openResults} type="PRIMARY" />
     </View>
   );
 };

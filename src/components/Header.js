@@ -7,31 +7,32 @@ import CustomButton from './CustomButton/CustomButton';
 const Header = ({title, buttonTitle, onPress}) => {
     return (
         <View style={styles.root}>
-            <View>
-            <CustomText value="" size="7" />
-            <CustomText value={title} size={HEADER_SIZE} color={WHITE_COLOR} bold="true" />
-            {/* {'buttonTitle'}</Button> */}
+            <View style={styles.flex}>
+                <View>
+                    <CustomText value="" size="7" />
+                    <CustomText value={title} size={HEADER_SIZE} color={WHITE_COLOR} bold="true" />
+                    {/* {'buttonTitle'}</Button> */}
+                </View><View style={{flex:1 }} />
+                {buttonTitle && <View style={{'width':110, height:50 }} >
+                    <CustomButton text={buttonTitle} onPress={onPress} type="SECONDARY" />
+                </View>}
             </View>
-            {buttonTitle && <View style={{'width':150, 'right':-242 }} >
-                <CustomButton text={buttonTitle} onPress={onPress} type="SECONDARY" />
-            </View>}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     root: {
-        padding: 4,
+        paddingTop:30,
         paddingLeft:10,
+        paddingRight:5,
         backgroundColor: BACKGROUND_COLOR,
-        height: 70,
+        height: 80,
         fontWeight: 'bold'
     },
-    logo: {
-        width: '70%',
-        maxWidth:500,
-        height: 100,
-        maxHeight: 300
+    flex: {
+        display: 'flex',
+        flexDirection: 'row'
     }
 })
 

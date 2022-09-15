@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Image, StyleSheet, useWindowDimensions } from 'react-native';
-import Logo from '../../assets/images/election.jpg';
+import Logo from '../../assets/images/login.png';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import {useNavigation} from '@react-navigation/native';
@@ -45,18 +45,14 @@ const SignInScreen = (props) => {
 
     }
 
-    const onForgotPasswordPressed = () => {
-        navigation.navigate('Result');
-    }
-
   return (
     <View style={[styles.root, {marginTop: height * 0.2}]}>
       <Image source={Logo} style={[styles.logo]} resizeMode="contain" />
+      <CustomText value="AGENT LOGIN" color="#000022" bold />
       <CustomText value={error} color="red" bold />
       <CustomInput placeholder='Username' value={username} setValue={setUsername} />
       <CustomInput placeholder='Password' value={password} setValue={setPassword} secureTextEntry />
-      <CustomButton isLoading={isLoading} text='Sign In' onPress={onSignInPressed} />
-      <CustomButton text='Forgot password?' onPress={onForgotPasswordPressed} type="TERTIARY" />
+      <CustomButton isLoading={isLoading} text='Login' onPress={onSignInPressed} />
     </View>
   );
 };
@@ -64,7 +60,8 @@ const SignInScreen = (props) => {
 const styles = StyleSheet.create({
     root: {
         alignItems: 'center',
-        padding: 20
+        padding: 20,
+        marginHorizontal:10
     },
     logo: {
         width: '40%',

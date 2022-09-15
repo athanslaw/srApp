@@ -1,39 +1,40 @@
-import React from 'react';
-import { View, StyleSheet, FlatList } from "react-native";
-import CustomText from "../../../components/CustomText/CustomText";
+import React, { useEffect, useState} from 'react';
+import { View, StyleSheet } from "react-native";
 import Header from "../../../components/Header";
 import IncidentLine from './component/IncidentLine';
 import { useNavigation } from '@react-navigation/native';
+import { apiRequest } from '../../../lib/api';
+import { filterIncidents } from '../../../lib/url';
+import { connect } from 'react-redux';
 
 const IncidentScreen = (props) => {
     const navigation = useNavigation();
     
+    const [isLoading, setIsLoading] = useState(false);
+    const [currentIncidents, setCurrentIncidents] = useState([]);
+    const fetchIncidents = () => {
+        setIsLoading(true);
+        url = `${filterIncidents}/lga/305`;
+          apiRequest(props.user.token, url, 'get')
+              .then((res) => {              
+                  
+                    setCurrentIncidents(res.incidents);
+                    setIsLoading(false);
+              })
+              .catch((err) => {
+                console.log("Failed: "+ err.statusMessage);
+                  setIsLoading(false);
+              });
+  
+      }
+
     const addIncident = () => {
-        console.log("Athans Incidents")
         navigation.navigate('create-incident');
     }
 
-    const incidents = [{
-        'id': 1,
-        'Incident Type': 'Ballot Box Snatching',
-        'Location':'Deeper life',
-        'Description':'It happened when the election just started',
-        'Severity': 'Critical'
-    },{
-        'id': 2,
-        'Incident Type': 'Delay of Electoral Materials',
-        'Location':'Deeper life',
-        'Description':'It happened when the election just started',
-        'Severity': 'Critical'
-    },
-    {
-        'id': 3,
-        'Incident Type': 'Device not working',
-        'Location':'Deeper life',
-        'Description':'It happened when the election just started',
-        'Severity': 'Critical'
-    }
-    ];
+
+    useEffect(()=>fetchIncidents(),[]);
+
     return (
         <>
         <Header 
@@ -43,9 +44,7 @@ const IncidentScreen = (props) => {
             />
             
         <View style={{marginLeft:20, marginRight:20}}>
-            <CustomText value='' size="30" />
-            <View style={styles.super}></View>
-            <IncidentLine incidents={incidents} />
+            <IncidentLine loading={isLoading} incidents={currentIncidents} />
         </View>
     </>)
 }
@@ -58,4 +57,8 @@ const styles = StyleSheet.create({
     }
 })
 
-export default IncidentScreen;
+const mapStateToProps = ( state ) => {
+    return { user : state.user.user }
+  }
+  
+export default connect(mapStateToProps)(IncidentScreen);

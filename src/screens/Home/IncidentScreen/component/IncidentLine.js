@@ -2,7 +2,7 @@ import React from 'react';
 import CustomText from '../../../../components/CustomText/CustomText';
 import { View, StyleSheet, Text, FlatList, SafeAreaView } from "react-native";
 import CustomButton from '../../../../components/CustomButton/CustomButton';
-import SimpleLottie from '../../../../assets/animations/SimpleLottie';
+import Loader from '../../../../components/Loader';
 
 
 const incidentWeight = ["","Not Critical", "Not Very Critical", "Manageable", "Critical","Very Critical"]
@@ -46,7 +46,7 @@ const IncidentLine = ({incidents, loading}) => {
 
     return (
         loading===true?
-        <CustomText size="16" value="Fetching Data" />:(<SafeAreaView>
+        <Loader />:(<SafeAreaView>
             {incidents?.length > 0 && 
             <FlatList
                 contentContainerStyle={styles.padding}

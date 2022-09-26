@@ -1,11 +1,11 @@
-import React, { useEffect, useState} from 'react';
-import { View, StyleSheet } from "react-native";
-import Header from "../../../components/Header";
-import IncidentLine from './component/IncidentLine';
 import { useNavigation } from '@react-navigation/native';
-import { apiRequest } from '../../../lib/api';
-import { filterIncidents } from '../../../lib/url';
+import React, { useEffect, useState } from 'react';
+import { Alert, StyleSheet, View } from "react-native";
 import { connect } from 'react-redux';
+import Header from "../../../components/Header";
+import { apiRequest } from '../../../lib/api';
+import { incidentsBase } from '../../../lib/url';
+import IncidentLine from './component/IncidentLine';
 
 const IncidentScreen = (props) => {
     const navigation = useNavigation();
@@ -14,22 +14,53 @@ const IncidentScreen = (props) => {
     const [currentIncidents, setCurrentIncidents] = useState([]);
     const fetchIncidents = () => {
         setIsLoading(true);
-        url = `${filterIncidents}/lga/305`;
+        const url = `${incidentsBase}/ward/${props.user.wardId}`;
           apiRequest(props.user.token, url, 'get')
               .then((res) => {              
-                  
+                  console.log(url,{res})
                     setCurrentIncidents(res.incidents);
                     setIsLoading(false);
               })
               .catch((err) => {
+                console.log(err)
                 console.log("Failed: "+ err.statusMessage);
                   setIsLoading(false);
               });
   
       }
 
+      const showConfirmDialog = (item) => {
+        return Alert.alert(
+          "Delete Prompt",
+          "Are you sure you want to delete the selected result?",
+          [
+            {
+              text: "Yes",
+              onPress: () => {
+                onDelete(item);
+              },
+            },
+            {
+              text: "No",
+            },
+          ]
+        );
+      };
+
+    const onDelete = (item) => {
+        setIsLoading(true);
+            apiRequest(props.user.token, `${incidentsBase}/delete/${item.id}`, 'delete')
+            .then((res)=>{
+              fetchIncidents();
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                Alert.alert("Failed: "+err)
+            });
+    }
+
     const addIncident = () => {
-        navigation.navigate('create-incident');
+        navigation.replace('create-incident');
     }
 
 
@@ -44,7 +75,7 @@ const IncidentScreen = (props) => {
             />
             
         <View style={{marginLeft:20, marginRight:20}}>
-            <IncidentLine loading={isLoading} incidents={currentIncidents} />
+            <IncidentLine loading={isLoading} incidents={currentIncidents} onDelete={showConfirmDialog} />
         </View>
     </>)
 }

@@ -7,10 +7,11 @@ import {useNavigation} from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { saveUser } from '../../actions/user';
 import { apiRequest } from '../../lib/api';
-import { login } from '../../lib/url';
+import { login, getAgentByPhone } from '../../lib/url';
 import CustomText from '../../components/CustomText/CustomText';
 
 const SignInScreen = (props) => {
+  const navigation = useNavigation();
   if(props.user.username && props.user.username !==""){
     navigation.navigate('Home');
   }
@@ -20,23 +21,31 @@ const SignInScreen = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
-    const navigation = useNavigation();
 
     const onSignInPressed = () => {
       setIsLoading(true);
 
         apiRequest("", login, 'post', { username:username, password:password })
-            .then((res) => {              
+            .then((res) => {          
+              console.log(res)
+              apiRequest(res.token, getAgentByPhone+username, 'get')
+              .then((res1)=>{
                 props.saveUser({
-                  username:username,
+                  username:res1.partyAgentDto.id,
                   token:res.token, 
-                  state:res.userDetails.stateId, 
-                  lga:res.userDetails.lgaId, 
+                  state:res1.partyAgentDto.stateId, 
+                  lga:res1.partyAgentDto.lgaId, 
+                  wardId:res1.partyAgentDto.wardId, 
+                  wardName:res1.partyAgentDto.wardName, 
+                  pollingUnitId:res1.partyAgentDto.pollingUnitId, 
+                  pollingUnit:res1.partyAgentDto.pollingUnitName, 
                   fullname:`${res.userDetails.firstname} ${res.userDetails.lastname}`, 
-                  ward:1, 
-                  pu:1});
+                });
                 setIsLoading(false);
                 navigation.navigate('Home');
+
+              })
+                
             })
             .catch((err) => {
               setError("Failed: "+ err.statusMessage);

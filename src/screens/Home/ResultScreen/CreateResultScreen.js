@@ -1,28 +1,112 @@
-import React, {useState} from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View } from "react-native";
+import { connect } from "react-redux";
+import { apiRequest } from "../../../lib/api";
+import { allVotingLevels, electionTypes, getPollingUnit, politicalPartiesByState, result } from "../../../lib/url";
 import ResultForm from "./component/ResultForm";
 
 
+const CreateResultScreen = ( props) => {
+    console.log("Here")
+    const [isLoading, setIsLoading] = useState(false);
+    const [votingLevels, setVotingLevels] = useState([]);
+    const [parties, setParties] = useState([]);
+    const [electionTypeList, setElectionTypeList] = useState([]);
+    const [alert, setAlert] = useState({
+        isError:false,
+        message:''
+    });
 
-const CreateResultScreen = () => {
-    const onSubmit = () => {
-        console.warn("Here");
+    const onSubmit = (values) => {
+
+        const sum = parseInt(values.party_1) + parseInt(values.party_2) + parseInt(values.party_3)
+            + parseInt(values.party_4) + parseInt(values.party_5) + parseInt(values.party_6) + parseInt(values.voidVotes);
+        if(isNaN(sum)){
+            setAlert({message:"All fields are compulsory", isError:true});
+            return;
+        }
+        if(values.accreditedVotersCount < sum){
+            setAlert({message:"Accredited voters should not be less than the total sum of votes", isError:true});
+        }else if(values.accreditedVotersCount > values.registeredVotersCount){
+            setAlert({message:"Accredited voters should not be greater than registered voters", isError:true});
+        }else{
+            setIsLoading(true);
+            apiRequest(props.user.token, result, 'post', {...values})
+            .then((res)=>{
+                setIsLoading(false);
+                setAlert({message:"Successfully submitted", isError:false})
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                setAlert({message:`${err?.response?.data.statusCode || "Error"}: ${err?.response?.data.statusMessage || "Something went wrong. Please try again later."}`, isError:true})
+            });
+        }
     }
-    const formField = {
-        party1:12,
-        party2:22,
-        party3:10,
-        party4:12,
-        party5:32,
-        party1Label:"PDP",
-        party2Label:"APC",
-        party3Label:"LP",
-        party4Label:"APGA",
-        party5Label:"NNPP"
+    
+    const [formField, setFormField] = useState({
+        submitLabel:"SAVE",
+        voidVotes: "",
+        accreditedVotersCount:"",
+        registeredVotersCount: ""
+    })
+
+    const loadParties = () =>{
+        apiRequest(props.user.token, `${politicalPartiesByState}/${props.user.state}`, 'get')
+            .then((res)=>{
+                let buildFormField = {};
+                res.politicalParties.forEach((element, index) => {
+                    buildFormField[element.code] = "";
+                    buildFormField[`party_${index+1}Label`] = element.name;
+                });
+                setParties(buildFormField);
+            })
     }
-    return <View><ResultForm formField={formField} onPress={onSubmit} /></View>;
+    
+  const getPollingUnitList = () => {
+    apiRequest(props.user.token, `${getPollingUnit}/ward/${props.user.wardId}`, 'get')
+    .then((res)=>{
+        let pollingUnits = {...formField};
+        pollingUnits['pollingUnits'] = res.pollingUnits;
+        setFormField(pollingUnits);
+    })
+  }
+
+  const getElectionTypeList = () => {
+    apiRequest(props.user.token, electionTypes, 'get')
+    .then((res)=>{
+        setElectionTypeList(res.electionTypes);
+    })
+  }
+  
+  const getVotingLevelList = () => {
+    apiRequest(props.user.token, allVotingLevels, 'get')
+    .then((res)=>{
+        setVotingLevels(res.votingLevels);
+    })
+  }
+
+  useEffect(
+      ()=>{
+          loadParties();
+          getElectionTypeList();
+          getPollingUnitList();
+          getVotingLevelList();
+      },
+      []
+  );
+    return (
+    <>
+        <View>
+            <ResultForm title="Add Result" party={parties} setParty={setParties} votingLevelList={votingLevels} electionTypeList={electionTypeList} formField={formField} setFormField={setFormField} isLoading={isLoading} alert={alert} onPress={onSubmit} />
+        </View>
+    </>)
     
     
 }
 
-export default CreateResultScreen;
+const mapStateToProps = ( state ) => {
+    let {user} = state.user;
+    return { user }
+  }
+  
+export default connect(mapStateToProps)(CreateResultScreen);

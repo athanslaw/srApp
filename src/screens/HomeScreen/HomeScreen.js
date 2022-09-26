@@ -1,11 +1,10 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {View, Text, Image, StyleSheet, useWindowDimensions} from 'react-native';
+import { Image, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { connect } from 'react-redux';
 import Logo from '../../assets/images/election.jpg';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import { connect } from 'react-redux';
 import CustomText from '../../components/CustomText/CustomText';
-//import '../../assets/styles/main.css';
 
 const HomeScreen = (props) => {
     const {height} = useWindowDimensions();
@@ -18,7 +17,7 @@ const HomeScreen = (props) => {
       navigation.navigate('Incident');
     }
     const openResults = () => {
-      navigation.navigate('Results');
+      navigation.navigate('Result');
     }
 
   return (
@@ -29,7 +28,7 @@ const HomeScreen = (props) => {
       <CustomText value="" />
       <CustomButton text='TRACK EVENTS' onPress={openEvents} type="PRIMARY" />
       <CustomButton text='REPORT INCIDENTS' onPress={openIncidents} type="PRIMARY" />
-      <CustomButton text='SUBMIT RESULT' onPress={openResults} type="PRIMARY" />
+      <CustomButton text='ELECTION RESULTS' onPress={openResults} type="PRIMARY" />
     </View>
   );
 };

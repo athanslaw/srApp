@@ -15,14 +15,11 @@ const ResultScreen = (props) => {
         setIsLoading(true);
         const url = `${getResultsByWard}/${props.user.wardId}`;
           apiRequest(props.user.token, url, 'get')
-              .then((res) => {              
-                  console.log(url,{res})
+              .then((res) => {          
                     setCurrentResults(res.results);
                     setIsLoading(false);
               })
               .catch((err) => {
-                console.log(err)
-                console.log("Failed: "+ err.statusMessage);
                   setIsLoading(false);
               });
   

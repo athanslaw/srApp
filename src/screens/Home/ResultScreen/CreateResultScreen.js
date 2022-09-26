@@ -7,7 +7,6 @@ import ResultForm from "./component/ResultForm";
 
 
 const CreateResultScreen = ( props) => {
-    console.log("Here")
     const [isLoading, setIsLoading] = useState(false);
     const [votingLevels, setVotingLevels] = useState([]);
     const [parties, setParties] = useState([]);

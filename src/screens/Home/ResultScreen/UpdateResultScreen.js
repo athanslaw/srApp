@@ -16,7 +16,6 @@ const UpdateResultScreen = ( props) => {
     
     const [isLoading, setIsLoading] = useState(false);
     const [votingLevels, setVotingLevels] = useState([]);
-    console.log("Parties:",item.resultPerParties)
 
     const [parties, setParties] = useState({});
     
@@ -39,7 +38,6 @@ const UpdateResultScreen = ( props) => {
     });
 
     const onSubmit = (values) => {
-        console.log("LPPP:",formField.id,values);
         const sum = parseInt(values.party_1) + parseInt(values.party_2) + parseInt(values.party_3)
             + parseInt(values.party_4) + parseInt(values.party_5) + parseInt(values.party_6) + parseInt(values.voidVotes);
         if(isNaN(sum)){

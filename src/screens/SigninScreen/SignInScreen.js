@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
-import {View, Image, StyleSheet, useWindowDimensions } from 'react-native';
-import Logo from '../../assets/images/login.png';
-import CustomInput from '../../components/CustomInput/CustomInput';
-import CustomButton from '../../components/CustomButton/CustomButton';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Image, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { connect } from 'react-redux';
 import { saveUser } from '../../actions/user';
-import { apiRequest } from '../../lib/api';
-import { login, getAgentByPhone } from '../../lib/url';
+import Logo from '../../assets/images/login.png';
+import CustomButton from '../../components/CustomButton/CustomButton';
+import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomText from '../../components/CustomText/CustomText';
+import { apiRequest } from '../../lib/api';
+import { getAgentByPhone, login } from '../../lib/url';
 
 const SignInScreen = (props) => {
   const navigation = useNavigation();
@@ -26,8 +26,7 @@ const SignInScreen = (props) => {
       setIsLoading(true);
 
         apiRequest("", login, 'post', { username:username, password:password })
-            .then((res) => {          
-              console.log(res)
+            .then((res) => {  
               apiRequest(res.token, getAgentByPhone+username, 'get')
               .then((res1)=>{
                 props.saveUser({

@@ -23,7 +23,6 @@ const CreateIncidentScreen = ( props) => {
         "reportedLocation":formField.reportedLocation,
         "phoneNumberToContact":formField.phoneNumberToContact,
         "description":formField.description};
-        console.log("Values:", values);
         apiRequest(props.user.token, incidentsBase, 'post', values)
         .then((res)=>{
             setIsLoading(false);

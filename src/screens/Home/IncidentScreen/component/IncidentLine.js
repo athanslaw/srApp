@@ -13,7 +13,6 @@ const IncidentLine = ({incidents, loading, onDelete}) => {
     const incidentWeight = ["","Not Critical", "Not Very Critical", "Manageable", "Critical","Very Critical"]
     
     const onEdit = (item) => {
-        console.log("Item:", {item})
         navigation.replace('update-incident', {item: item});
     }
   

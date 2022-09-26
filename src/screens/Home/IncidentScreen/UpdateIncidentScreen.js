@@ -43,9 +43,8 @@ const UpdateIncidentScreen = ( props) => {
         message:''
     });
 
-    const onSubmit = (values) => {        
+    const onSubmit = () => {        
         setIsLoading(true);
-        console.log("Values::",formField)
         apiRequest(props.user.token, `${incidentsBase}/${formField.id}`, 'put', formField)
         .then((res)=>{
             setIsLoading(false);

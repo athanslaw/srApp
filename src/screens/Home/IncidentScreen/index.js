@@ -16,14 +16,11 @@ const IncidentScreen = (props) => {
         setIsLoading(true);
         const url = `${incidentsBase}/ward/${props.user.wardId}`;
           apiRequest(props.user.token, url, 'get')
-              .then((res) => {              
-                  console.log(url,{res})
-                    setCurrentIncidents(res.incidents);
-                    setIsLoading(false);
+              .then((res) => {
+                  setCurrentIncidents(res.incidents);
+                  setIsLoading(false);
               })
               .catch((err) => {
-                console.log(err)
-                console.log("Failed: "+ err.statusMessage);
                   setIsLoading(false);
               });
   

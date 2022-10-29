@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
-const CustomButton = ({text, isLoading, onPress, type="PRIMARY"}) => {
+const EventButton = ({text, isLoading, onPress, type="PRIMARY"}) => {
     return (<>
             {!isLoading && <Pressable onPress={onPress} style={[styles.container, styles[`container_${type}`]]} >
                 <Text style={[styles.text, styles[`text_${type}`]]}>{text}</Text>
@@ -30,16 +30,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#ddddee',
     },
     container_PRIMARY: {
-        backgroundColor: '#333377'
+        backgroundColor: '#337733'
     },
     container_SECONDARY: {
-        backgroundColor: '#FFFFFF',
-        padding:10,
-    },
-    container_TERTIARY: {
-        borderRadius: 5,
-        padding:0,
-        marginVertical: 0
+        backgroundColor: '#C93333'
     },
     text:{
         fontWeight: 'bold',
@@ -49,14 +43,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#aaaacc',
     },
-    text_TERTIARY:{
-        fontWeight: 'bold',
-        color: '#333377',
-    },
     text_SECONDARY:{
-        fontWeight: 'bold',
-        color: '#333377',
+        fontWeight: 'bold'
     }
 })
 
-export default CustomButton
+export default EventButton

@@ -3,7 +3,6 @@ import React from 'react';
 import { FlatList, Image, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Delete from '../../../../assets/images/delete.png';
 import Edit from '../../../../assets/images/edit.png';
-import CustomButton from '../../../../components/CustomButton/CustomButton';
 import CustomText from '../../../../components/CustomText/CustomText';
 import Loader from '../../../../components/Loader';
 
@@ -41,21 +40,17 @@ const IncidentLine = ({incidents, loading, onDelete}) => {
             {item.description && (<View style={styles.root}>
                 <CustomText value={item.description} />
             </View>)}
-            <View style={styles.flex}>
-                <View style={styles.root}>
-                    <CustomText bold color="#333" value={`Severity: ${incidentWeight[item.weight]}`} />
-                </View>
-                <View style={{flex:1}} />
-                <View><CustomButton text='Edit' onPress={headerComponent} type="TERTIARY" /></View>
+            <View style={styles.root}>
+                <CustomText bold color="#333" value={`Severity: ${incidentWeight[item.weight]}`} />
             </View>
         </View>
     }
 
-    itemSeparator = () =>{
+    const itemSeparator = () =>{
         return <View style={styles.separator} />
     }
 
-    headerComponent =()=>{
+    const headerComponent =()=>{
         return <Text style={styles.listHeadline}>Total Incidents: {incidents.length}</Text>
     }
 
@@ -72,7 +67,9 @@ const IncidentLine = ({incidents, loading, onDelete}) => {
                 ListEmptyComponent={ <Text>No record found</Text>}
                 keyExtractor={ incidents => incidents.id}
                 ItemSeparatorComponent={ itemSeparator}
-             /><View style={{marginBottom:-100}}/></>:<Text style={[styles.listHeadline]}>{'\n\n'}No reported incident yet</Text>}
+             />
+             {incidents.length > 2 && <View style={{marginBottom:-100}}/>}
+             </>:<Text style={[styles.listHeadline]}>{'\n\n'}No reported incident yet</Text>}
         </SafeAreaView>)
     )
 }
@@ -81,7 +78,7 @@ const styles = StyleSheet.create({
     root: {
         padding: 1,
         display: 'flex',
-        flexDirection: 'row'
+        flexWrap: 'wrap'
     },
     padding: {
         paddingVertical: 13
@@ -97,7 +94,7 @@ const styles = StyleSheet.create({
     },
     flex:{
         display:'flex',
-        flexDirection: 'row'
+        flexWrap: 'wrap'
     },
     listHeader: {
         height:17,

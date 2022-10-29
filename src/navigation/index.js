@@ -4,6 +4,7 @@ import React from "react";
 // import { useTheme } from 'react-native-paper';
 
 import EventsScreen from "../screens/Home/EventsScreen/index";
+import TrackMaterialsMovement from "../screens/Home/EventsScreen/TrackMaterialsMovement";
 import CreateIncidentScreen from "../screens/Home/IncidentScreen/CreateIncidentScreen";
 import IncidentScreen from "../screens/Home/IncidentScreen/index";
 import UpdateIncidentScreen from "../screens/Home/IncidentScreen/UpdateIncidentScreen";
@@ -31,6 +32,7 @@ const Navigation = () => {
                 <Stack.Screen name="create-incident" component={CreateIncidentScreen} />
                 <Stack.Screen name="update-incident" component={UpdateIncidentScreen} />
                 <Stack.Screen name="Events" component={EventsScreen} />
+                <Stack.Screen name="materials-movement" component={TrackMaterialsMovement} />
             </Stack.Navigator>
         </NavigationContainer>
     )

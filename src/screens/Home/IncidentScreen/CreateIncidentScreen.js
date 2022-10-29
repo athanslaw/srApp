@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { apiRequest } from "../../../lib/api";
-import { allIncidentLevels, allIncidentTypes, getPollingUnit, incidentsBase } from "../../../lib/url";
+import { allIncidentTypes, getPollingUnit, incidentsBase } from "../../../lib/url";
 import IncidentForm from "./component/IncidentForm";
 
 
@@ -14,14 +14,13 @@ const CreateIncidentScreen = ( props) => {
         isError:false,
         message:''
     });
-
     const onSubmit = () => {
         setIsLoading(true);
         const values = {"incidentLevelId":formField.incidentLevelId,
         "incidentTypeId":formField.incidentTypeId,"incidentStatusId":formField.incidentStatusId,
         "weight":formField.weight,"lgaId":props.user.lga,"wardId":props.user.wardId,"pollingUnitId":formField.pollingUnitId,
         "reportedLocation":formField.reportedLocation,
-        "phoneNumberToContact":formField.phoneNumberToContact,
+        "phoneNumberToContact":props.user.phone,
         "description":formField.description};
         apiRequest(props.user.token, incidentsBase, 'post', values)
         .then((res)=>{
@@ -58,10 +57,23 @@ const CreateIncidentScreen = ( props) => {
   }
   
   const getIncidentLevelList = () => {
-    apiRequest(props.user.token, allIncidentLevels, 'get')
-    .then((res)=>{
-        setIncidentLevels(res.incidentLevels);
-    })
+    let levels = [
+        {"code": "ICIL", "id": 1, "name": "LGA"}, 
+        {"code": "2", "id": 2, "name": "Ward"}, 
+        {"code": "3", "id": 3, "name": "Polling Unit"}
+    ];
+    if(props.user.role == "PU"){
+        levels = [
+            {"code": "3", "id": 3, "name": "Polling Unit"}
+        ];
+    }
+    else if(props.user.role==="Ward"){
+        levels = [
+            {"code": "2", "id": 2, "name": "Ward"}, 
+            {"code": "3", "id": 3, "name": "Polling Unit"}
+        ];
+    }
+    setIncidentLevels(levels);
   }
 
   useEffect(

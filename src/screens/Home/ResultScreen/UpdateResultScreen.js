@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { connect } from "react-redux";
 import { apiRequest } from "../../../lib/api";
 import { allVotingLevels, electionTypes, getPollingUnit, result } from "../../../lib/url";
@@ -66,7 +66,7 @@ const UpdateResultScreen = ( props) => {
         apiRequest(props.user.token, `${getPollingUnit}/ward/${props.user.wardId}`, 'get')
         .then((res)=>{
             let pollingUnits = {...formField};
-            pollingUnits['pollingUnitName'] = res.pollingUnits.filter(pu=>pu.id==item.pollingUnit.id)[0].name;
+            pollingUnits['pollingUnitName'] = res.pollingUnits.filter(pu=>pu.id==item.pollingUnit.id)[0]?.name;
             setFormField(pollingUnits);
         })
     }
@@ -104,11 +104,11 @@ const UpdateResultScreen = ( props) => {
         []
     );
     return (
-    <>
+    <ScrollView>
         <View>
             <ResultForm title="Update Result" party={parties} setParty={setParties} votingLevelList={votingLevels} electionTypeList={electionTypeList} formField={formField} setFormField={setFormField} isLoading={isLoading} alert={alert} onPress={onSubmit} />
         </View>
-    </>)
+    </ScrollView>)
     
     
 }

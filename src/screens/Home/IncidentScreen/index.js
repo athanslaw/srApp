@@ -29,7 +29,7 @@ const IncidentScreen = (props) => {
       const showConfirmDialog = (item) => {
         return Alert.alert(
           "Delete Prompt",
-          "Are you sure you want to delete the selected result?",
+          "Are you sure you want to delete the selected incident?",
           [
             {
               text: "Yes",

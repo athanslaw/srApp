@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { apiRequest } from "../../../lib/api";
-import { allVotingLevels, electionTypes, getPollingUnit, politicalPartiesByState, result } from "../../../lib/url";
+import { electionTypes, getPollingUnit, politicalPartiesByState, result } from "../../../lib/url";
 import ResultForm from "./component/ResultForm";
 
 
@@ -78,10 +78,23 @@ const CreateResultScreen = ( props) => {
   }
   
   const getVotingLevelList = () => {
-    apiRequest(props.user.token, allVotingLevels, 'get')
-    .then((res)=>{
-        setVotingLevels(res.votingLevels);
-    })
+    let levels = [
+        {"code": "LGA", "id": 0, "name": "LGA"}, 
+        {"code": "Ward", "id": 1, "name": "Ward"}, 
+        {"code": "PollingUnit", "id": 2, "name": "Polling Unit"}
+    ];
+    if(props.user.role == "PU"){
+        levels = [
+            {"code": "PollingUnit", "id": 2, "name": "Polling Unit"}
+        ];
+    }
+    else if(props.user.role==="Ward"){
+        levels = [
+            {"code": "Ward", "id": 1, "name": "Ward"}, 
+            {"code": "PollingUnit", "id": 2, "name": "Polling Unit"}
+        ];
+    }
+    setVotingLevels(levels);
   }
 
   useEffect(

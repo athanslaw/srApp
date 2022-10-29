@@ -42,8 +42,7 @@ const IncidentForm = (props) => {
         incidentItem:"",
         incidentTypeId:"",
         reportedLocation: "",
-        description: "",
-        phoneNumberToContact: "",
+        description: ""
     });
   }
   
@@ -109,13 +108,6 @@ const IncidentForm = (props) => {
             placeholder="Location here"
             value={`${formField.reportedLocation}`}
             setValue={(e)=>handleFieldChange(e, 'reportedLocation')}
-          />
-
-          <Text style={styles.label}>Phone Number</Text>
-          <CustomInput
-            placeholder="Phone number here"
-            value={`${formField.phoneNumberToContact}`}
-            setValue={(e)=>handleFieldChange(e, 'phoneNumberToContact')}
           />
 
           <Text style={styles.label}>Description</Text>

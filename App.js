@@ -1,14 +1,14 @@
 
 import React from 'react';
 //import './App.css';
-import {SafeAreaView, PermissionsAndroid, StyleSheet, StatusBar} from 'react-native';
+import { PermissionsAndroid, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import Navigation from './src/navigation';
 
 
 const checkPermission = async () => {
   return PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
 }
-
+/*
 const requestLocationPermission = async () => {
   try {
     const granted = await PermissionsAndroid.request(
@@ -31,8 +31,10 @@ const requestLocationPermission = async () => {
     console.warn(err);
   }
 };
-
+*/
 const App = () => {
+  
+  //useEffect(()=> SplashScreen.hide(), []);
   return (
     <SafeAreaView style={styles.root}>
       <StatusBar translucent backgroundColor="transparent" />

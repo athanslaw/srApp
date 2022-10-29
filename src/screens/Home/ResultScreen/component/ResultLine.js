@@ -86,17 +86,17 @@ const ResultLine = ({results, loading, onDelete}) => {
                     <CustomText value="PARTY RESULTS" color="#005500" bold />
                 </View>
                 <View style={styles.root}>
-                    <CustomText bold value={`${item.resultPerParties[0].politicalParty.name}: ${item.resultPerParties[0].voteCount}; `} />
-                    <CustomText bold value={`${item.resultPerParties[1].politicalParty.name}: ${item.resultPerParties[1].voteCount}; `} />
+                    <CustomText bold value={`${item.resultPerParties[0]?.politicalParty.name}: ${item.resultPerParties[0]?.voteCount}; `} />
+                    <CustomText bold value={`${item.resultPerParties[1]?.politicalParty.name}: ${item.resultPerParties[1]?.voteCount}; `} />
                 </View>
                 
                 <View style={styles.root}>
-                    <CustomText bold value={`${item.resultPerParties[2].politicalParty.name}: ${item.resultPerParties[2].voteCount}; `} />
-                    <CustomText bold value={`${item.resultPerParties[3].politicalParty.name}: ${item.resultPerParties[3].voteCount}; `} />
+                    <CustomText bold value={`${item.resultPerParties[2]?.politicalParty.name}: ${item.resultPerParties[2]?.voteCount}; `} />
+                    <CustomText bold value={`${item.resultPerParties[3]?.politicalParty.name}: ${item.resultPerParties[3]?.voteCount}; `} />
                 </View>
                 <View style={styles.root}>
-                    <CustomText bold value={`${item.resultPerParties[4].politicalParty.name}: ${item.resultPerParties[4].voteCount}; `} />
-                    <CustomText bold value={`${item.resultPerParties[5].politicalParty.name}: ${item.resultPerParties[5].voteCount}; `} />
+                    <CustomText bold value={`${item.resultPerParties[4]?.politicalParty.name}: ${item.resultPerParties[4]?.voteCount}; `} />
+                    <CustomText bold value={`${item.resultPerParties[5]?.politicalParty.name}: ${item.resultPerParties[5]?.voteCount}; `} />
                 </View>
                 
             </View>
@@ -126,7 +126,8 @@ const ResultLine = ({results, loading, onDelete}) => {
                 keyExtractor={ results => results.id}
                 ItemSeparatorComponent={ itemSeparator}
              />
-             <View style={{marginBottom:-100}}/></>:<Text style={[styles.listHeadline]}>{'\n\n'}No result entry yet</Text>}
+             {results.length > 2 && <View style={{marginBottom:-100}}/>}
+             </>:<Text style={[styles.listHeadline]}>{'\n\n'}No result entry yet</Text>}
         </SafeAreaView>)
     )
 }

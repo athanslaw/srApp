@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { connect } from "react-redux";
 import { apiRequest } from "../../../lib/api";
 import { allIncidentTypes, getPollingUnit, incidentsBase } from "../../../lib/url";
@@ -73,11 +73,11 @@ const UpdateIncidentScreen = ( props) => {
         []
     );
     return (
-    <>
+    <ScrollView>
         <View>
             <IncidentForm title="Update Incident" incidentTypeList={incidentTypeList} formField={formField} setFormField={setFormField} isLoading={isLoading} alert={alert} onPress={onSubmit} />
         </View>
-    </>)
+    </ScrollView>)
     
     
 }

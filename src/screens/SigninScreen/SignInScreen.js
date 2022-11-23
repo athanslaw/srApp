@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Image, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { connect } from 'react-redux';
 import { saveUser } from '../../actions/user';
-import Logo from '../../assets/images/vote.jpg';
+import Logo from '../../assets/images/vote.png';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomText from '../../components/CustomText/CustomText';
@@ -25,7 +25,6 @@ const SignInScreen = (props) => {
     const onSignInPressed = () => {
       setIsLoading(true);
 
-      console.log("Athans:", username, password);
         apiRequest("", login, 'post', { username:username, password:password })
             .then((res) => {  
               apiRequest(res.token, getAgentByPhone+username, 'get')
@@ -43,17 +42,14 @@ const SignInScreen = (props) => {
                   phone:res1.partyAgentDto.phone,
                   role:res1.partyAgentDto.role
                 });
-                setIsLoading(false);
-                navigation.navigate('Home');
-
-              })
-                
+                navigation.replace('Home');
+              });
+              setIsLoading(false);
             })
             .catch((err) => {
               setError("Failed: "+ err.statusMessage);
                 setIsLoading(false);
             });
-            setIsLoading(false);
 
     }
 
@@ -65,7 +61,7 @@ const SignInScreen = (props) => {
         <CustomText value={error} color="red" bold />
         <CustomInput placeholder='Username' value={username} setValue={setUsername} />
         <CustomInput placeholder='Password' value={password} setValue={setPassword} secureTextEntry />
-        <CustomButton isLoading={isLoading} text='Login' onPress={onSignInPressed} />
+        <CustomButton isLoading={isLoading} text='LOGIN' onPress={onSignInPressed} />
       </View>
     </ScrollView>
   );
@@ -78,9 +74,9 @@ const styles = StyleSheet.create({
         marginHorizontal:2
     },
     logo: {
-        height: 150,
+        height: 120,
         maxHeight: 600,
-        marginBottom:40
+        marginBottom:20
     }
 })
 

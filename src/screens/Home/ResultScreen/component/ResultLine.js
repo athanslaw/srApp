@@ -47,7 +47,7 @@ const ResultLine = ({results, loading, onDelete}) => {
         return <View style={[styles.padding]}>
             
                 <View style={styles.root}>
-                    <CustomText value={`${electionTypes[item?.electionType-1 || 0].name.toUpperCase()} ELECTION`} bold color="#950020" />
+                    <CustomText value={`${electionTypes[(item?.electionType && item?.electionType - 1) || 0].name.toUpperCase()} ELECTION`} bold color="#950020" />
                 </View>
                 <View style={styles.root}>
                     <CustomText color="grey" bold value={`${item.votingLevel.name} Result`} />

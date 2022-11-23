@@ -64,4 +64,5 @@ const apiRequest = async ( token, url, httpMethod, body = {}, additionalParams =
   });
 };
 
-export {apiRequest};
+export { apiRequest };
+

@@ -2,6 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
 const CustomButton = ({text, isLoading, onPress, type="PRIMARY"}) => {
+    console.log("Yesss:", isLoading);
     return (<>
             {!isLoading && <Pressable onPress={onPress} style={[styles.container, styles[`container_${type}`]]} >
                 <Text style={[styles.text, styles[`text_${type}`]]}>{text}</Text>

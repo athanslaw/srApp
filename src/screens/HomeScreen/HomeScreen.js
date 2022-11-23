@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, useWindowDimensions, View } from 'react-native';
@@ -19,16 +20,21 @@ const HomeScreen = (props) => {
     const openResults = () => {
       navigation.navigate('Result');
     }
+    const logout = () => {
+      AsyncStorage.clear();
+      navigation.replace('Signin');
+    }
 
   return (
     <View style={styles.root}>
       <Image source={Logo} className="logo" style={[{height: height * 0.3}]} resizeMode="contain" />
-      <CustomText value="" />
-      <CustomText value={`Welcome ${props.user.fullname}`} />
-      <CustomText value="" />
+      <View style={{height:30}} />
+      <CustomText color="#ff6565" bold value={`Welcome ${props.user.fullname}`} size="16" />
+      <View style={{height:10}} />
       <CustomButton text='TRACK EVENTS' onPress={openEvents} type="PRIMARY" />
       <CustomButton text='REPORT INCIDENTS' onPress={openIncidents} type="PRIMARY" />
       <CustomButton text='ELECTION RESULTS' onPress={openResults} type="PRIMARY" />
+      <CustomButton text='LOGOUT' onPress={logout} type="SECONDARY" />
     </View>
   );
 };

@@ -41,6 +41,8 @@ export const uploadIncident = `${baseUrl}/api/v${version}/incident/upload`;
 
 //---- VOTING LEVELS URLS----//
 export const allVotingLevels = `${baseUrl}/api/v${version}/voting-level/all`;
+export const events = `${baseUrl}/api/v${version}/event/active`;
+export const eventRecords = `${baseUrl}/api/v${version}/event-record`;
 
 //---- INCIDENT LEVELS URLS----//
 export const allIncidentLevels = `${baseUrl}/api/v${version}/incident-level/all`;

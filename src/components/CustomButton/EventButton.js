@@ -30,10 +30,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#ddddee',
     },
     container_PRIMARY: {
-        backgroundColor: '#337733'
+        backgroundColor: '#993333'
     },
     container_SECONDARY: {
-        backgroundColor: '#C93333'
+        backgroundColor: '#333377'
+    },
+    container_DISABLED: {
+        backgroundColor: '#bbddbb',
     },
     text:{
         fontWeight: 'bold',
@@ -43,8 +46,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#aaaacc',
     },
-    text_SECONDARY:{
+    text_PRIMARY:{
+        color: '#fdd',
         fontWeight: 'bold'
+    },
+    text_SECONDARY:{
+        fontWeight: 'bold',
+        color: "#ccd"
+    },
+    text_DISABLED:{
+        fontWeight: 'bold',
+        color: "#226622"
     }
 })
 

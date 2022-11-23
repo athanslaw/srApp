@@ -34,7 +34,6 @@ const requestLocationPermission = async () => {
 */
 const App = () => {
   
-  //useEffect(()=> SplashScreen.hide(), []);
   return (
     <SafeAreaView style={styles.root}>
       <StatusBar translucent backgroundColor="transparent" />

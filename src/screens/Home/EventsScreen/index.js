@@ -62,10 +62,9 @@ const EventsScreen = (props) => {
         apiRequest(props.user.token, `${eventRecords}/pu-events`, 'get',{params:{"pollingUnit":props.user.pollingUnitId}})
         .then((res)=>{
             setMyEventRecords(res.eventRecords);
-            console.log("Event Records:", res.eventRecords);
         })
         .catch((e) => {
-          console.log("EEEERRR:", e);
+          
         });
     }
 
@@ -132,11 +131,10 @@ export default connect(mapStateToProps)(EventsScreen);
 
 
 const Confirmation = ({modalVisible, setModalVisible, currentEvent, submitRecord}) => {
-    // https://reactnative.dev/docs/modal
     return (
       <View>
         <Modal style={styles.centeredView}
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
@@ -235,6 +233,7 @@ const Confirmation = ({modalVisible, setModalVisible, currentEvent, submitRecord
       textAlign: "center"
     },
     modalText: {
+      color: "#33333a",
       marginBottom: 15,
       textAlign: "center",
       fontWeight: "bold"
